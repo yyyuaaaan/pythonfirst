@@ -3,8 +3,8 @@
 __author__ = 'anyu'
 
 Assume you have a method isSubstring which checks if one word is a substring
-of another. Given two strings, si and s2, write code to check If s2 isa rotation
- of si using only onecalltoisSubstring (e.g., "waterbottLe" is a rotation of "erbottLewat").
+of another. Given two strings, si and s2, write code to check If s2 is a rotation
+ of si using only one call to isSubstring (e.g., "waterbottLe" is a rotation of "erbottLewat").
 """
 
 def strrotation(s1,s2):

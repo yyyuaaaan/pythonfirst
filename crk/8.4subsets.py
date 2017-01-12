@@ -14,6 +14,16 @@ P(2) + a3 = {a3}, {at, aj, {a2, a3}, {aaJ a2, a3}
 When merged together, the lines above make P(3).
 """
 
+def powerset2(myset):
+    """
+    recursion, powerset is subsets!, don't be consused of the name
+    """
+    if not myset: #l is [] wrong, but (not l) is ok
+        return [[]]
+    else:       # + and append() is very different
+        return powerset2(myset[:-1]) + [    subset+[myset[-1]]    for subset in powerset2(myset[:-1])]
+
+
 def powerset(myset):
     result = [[]]
     for element in myset:
@@ -22,18 +32,6 @@ def powerset(myset):
                                                                 # result will not change when do list operations
     return result
 
-def powerset2(myset):
-    """
-    recursion
-    :param myset:
-    :return:
-    """
-    if not myset: #l is [] wrong, but (not l) is ok
-        return [[]]
-    else:       # + and append() is very different
-        return powerset2(myset[:-1]) + [    subset+[myset[-1]]    for subset in powerset2(myset[:-1])]
-
 print powerset([])
-
 print powerset(['a','b','c'])
 print powerset2(['a','b','c'])
