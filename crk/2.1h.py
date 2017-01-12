@@ -15,70 +15,43 @@ class Node(object):
 
 linkedlist=Node()
 
-def remove_dup(linkedlist):
+
+def removedup(l):
     """
-    use list as linkedlist in python
-    use dict as hash table
+    current to loop the list
+    runner to delete dups
+    :param l:
+    :return:
     """
-    hashtable=[]
-    if not linkedlist or linkedlist.nextnode is None:
-        return linkedlist
-    else:
-        prerider= linkedlist
-        rider = prerider.nextnode
-        hashtable.append(prerider.data)
-        while rider.nextnode is not None:
-            if rider.data in hashtable:
-                prerider.nextnode=rider.nextnode
-                rider=prerider.nextnode
+    current = l
+    while current:
+        runner = current
+        while runner.nextnode:
+            if runner.nextnode.data == current.data:
+                runner.nextnode=runner.nextnode.nextnode
             else:
-                hashtable.append(rider.data)
-                rider=rider.nextnode
-                prerider=prerider.nextnode
+                runner = runner.nextnode
 
-        if rider.data in hashtable:
-            prerider.nextnode=None
-        return linkedlist
+        current=current.nextnode
+    return
 
-
-def remove_dup2(linkedlist):
+def removedupwithbuffer(l):
     """
     no extra buffer
-    if make yourself a python linked list, it will be very cumbersome.
-    trade off between time and space, and also readability, maintainability
-
-    assume linkedlist is a list() in python
-    assume current and rider are pointers of linkedlist
-    if define a new Node class, new space, less efficient than official python
-
     This code runs in 0(1) space, but 0(N2) time.
     """
+    d={}
+    i=0
+    pre = Node(None)
+    current = l
 
-def removdup(linkedlist):
-    if not linkedlist or linkedlist.nextnode == None:
-        return linkedlist
-    else:
-        current = linkedlist
-        rider=current.nextnode
-        prerider=current
-        while current.nextnode is not None:
-            while rider.nextnode is not None:
-                if rider.data ==current.data:
-                    prerider.nextnode=rider.nextnode # use prerider to del the current rider node
-                    rider = prerider.nextnode
-                else:
-                    rider=rider.nextnode
-                    prerider=prerider.nextnode
-            if rider.data == current.data:
-                prerider.nextnode = None
+    while current:
+        if current.data not in d.values():
+            d[i] = current.data
+            i+=1
+            pre = current
+        else:
+            pre.nextnode = current.nextnode
 
-            current= current.nextnode
-    return linkedlist
-
-
-
-
-
-#print remove_dup([1,2,3,4,4,'sfd',5,5,5,7])
-
-#print remove_dup2([1,2,3,4,4,5,5,5,7])
+        current=current.nextnode
+    return

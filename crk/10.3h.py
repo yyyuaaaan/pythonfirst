@@ -1,16 +1,20 @@
 """__author__ = 'anyu'
+Search in Rotated Array:
 Given a sorted array of n integers that has been rotated an unknown number of times,
 give an O(log n) algorithm that finds an element in the array. You may assume that the array was originally
 sorted in increasing order.
+EXAMPLE
+lnput:findSin{lS, 16, 19, 20, 25, 1, 3, 4, 5, 7, 10, 14}
+Output: 8 (the index of 5 in the array)
 
-\
 """
 def findElem(a,key,start,end):
     """
     half of the array must be ordered normally (in increasing order), and mid must be at an ordered half
-    Note that while this problem is not conceptually very complex,it is actually very difficult to implement flawlessly.
-    Don't feel bad if you had trouble implementing it without a few bugs. Because of the ease of making off-by-one and
-    other minor errors,you should make sure to test your code very thoroughly.
+    Note that while this problem is not conceptually very complex,it is actually very difficult to
+    implement flawlessly.
+    Don't feel bad if you had trouble implementing it without a few bugs. Because of the ease of
+    making off-by-one and other minor errors,you should make sure to test your code very thoroughly.
     """
 
     #mid = (len(a)-1)//2 #,this is wrong!, because len(a) is not recursiveAvoid overflow, same as M=(L+R)/2

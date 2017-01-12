@@ -28,3 +28,29 @@ def replace_str(str):
 print replace_str("fsda s sfda fds")
 
 
+
+def replacestr(s):
+    spacecount=0
+    lenofs=len(s)
+    for char in s:
+        if char ==' ':
+            spacecount+=1
+
+    temp=[None]*(lenofs+2*spacecount)
+    indexofstr=lenofs-1
+    indexoflist=len(temp)-1
+    while indexofstr >= 0:
+        if s[indexofstr] == ' ':
+            temp[indexoflist]='0'
+            indexoflist-=1
+            temp[indexoflist]='2'
+            indexoflist-=1
+            temp[indexoflist]='%'
+            indexoflist-=1
+            indexofstr-=1
+        else:
+            temp[indexoflist]=s[indexofstr]
+            indexoflist -= 1
+            indexofstr -=1
+
+

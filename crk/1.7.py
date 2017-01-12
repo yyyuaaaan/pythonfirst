@@ -7,18 +7,21 @@ its entire row and column are set to 0
 """
 
 def set_ma_zero(ma,M,N):
-    tempset=set()   # void set can not be tempset={}, that is dict
-    for m in range(M):
-        for n in range(N):
-            if ma[m][n] == 0:
-                tempset.add((m,n)) # list can not be hashable, so [m,n] is not ok.
+    row=set()
+    col=set() # set element must be hashable, list not ok
+    for i in range(M):
+        for j in range(N):
+            if ma[i][j]==0:
+                row.add(i)
+                col.add(j) # if already in set, can still add j, no repetitions
 
-    print tempset
-    for [x,y] in tempset:
-        ma[x]=[0]*N
+    for ele in row:
+        for j in range(N):
+            ma[ele][j]=0
+
+    for ele2 in col:
         for i in range(M):
-            ma[i][y]=0
-
+            ma[i][ele2]=0
     return ma
 
 print  set_ma_zero([[1,2,3],[4,5,5],[7,8,9],[22,11,12]],4,3)
