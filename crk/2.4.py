@@ -18,23 +18,23 @@ have completed this splitting, we merge the two lists.
 filter: we trade less efficiency to less bugs and debugging time
 
 """
+def partitioned(value,llist):
+    ltvalue=filter(lambda x:x<= value, llist)
+    gtvalue=filter(lambda x:x> value, llist)
+    llist = ltvalue+gtvalue
+    return llist
 
-def parti(l,n):
-    dummy=Node(None)
-    dummy.nextnode = l
+def partitioned2(value,llist):
+    templist=[]
+    for p1 in range(len(llist)):
+            if llist[p1]>=value:
+                templist.append(llist[p1])
+            else:
+                templist.insert(0,llist[p1])
+    return  templist
 
-    p = l
-
-    while p.nextnode:
-        if p.nextnode.data <=n:
-            # move to front
-            temp = p.nextnode
-            p.nextnode=p.nextnode.nextnode
-            temp.nextnode=dummy.nextnode
-            dummy.nextnode=temp
-
-        p=p.nextnode
-    return
+print partitioned(3,[1,2,5,6,7,1,2,3,4,5,6,])
+print partitioned2(3,[1,2,5,6,7,1,2,3,4,5,6,])
 
 
 class Node(object):

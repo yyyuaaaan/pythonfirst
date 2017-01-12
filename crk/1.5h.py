@@ -7,41 +7,32 @@ aabcccccaa would become a2blc5a3.
 do nothing if this would not make the string smaller.
 """
 
-def str_compress(s):
-    '''
-    aabbbccccdsfa this is right
-    :param s:
-    :return:
-    '''
-    if not s:
-        print "null input"
-        return s
-    else:
-        i =0
-        count=1
-        temp=[]
-        while i<=len(s)-1:
-            if i == len(s)-1:
-                temp.append(s[i])
-                temp.append(str(count))
-            elif s[i] != s[i+1]:
-                temp.append(s[i])
-                temp.append(str(count))
-                count =1
+def str_compress(strinput):
+    """
+    very tricky question, border conditions, be careful
+    0(N) time and 0(N) space.
+    """
 
-            else:
-                count+=1
-            i+=1
-
-        if len(temp)<len(s):
-            return ''.join(temp)
+    str_comp=[]
+    count = 1
+    for i in range(len(strinput)-1):
+        if strinput[i] != strinput[i+1] :  # because have to consider the i+1 element, may array overflow
+            str_comp.append(strinput[i]+str(count))
+            count = 1
         else:
-            return s
+            count += 1
+
+    str_comp.append(strinput[-1]+str(count)) # an-1 = an; an-1 != an; two condition same
+
+    if len(str_comp) >= len(strinput):
+        return ''.join(strinput)
+    else:
+        return ''.join(str_comp)
+
 
 def str_compress2(strinput):
     """ another way: simple, use index as pointer! use 2 pointer p1 p2, use while
     use count anyway, pointer is complex
-    two inline while loop can be complex, so generally only use one while loop to make it much simpler
     """
     if len(strinput) <= 1: return strinput
 
@@ -66,4 +57,4 @@ def str_compress2(strinput):
 
 print str_compress2("abc")
 print str_compress2("aabc")
-print str_compress("aabcccccabbdssssd")
+print str_compress2("aabcccccabbdssssd")

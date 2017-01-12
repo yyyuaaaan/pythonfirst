@@ -3,20 +3,6 @@ http://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=135449&extra=page%3
 1. 两个链表 求最大的公共后缀
 '''
 
-import heapq
-
-def heapsort(l):
-    if not l:
-        return
-    else:
-        h=[] # initial heap
-        # or h= heapyfy([1,3,5,2) min heap
-        for ele in l:
-            heapq.heappush(h,ele)
-            # max heapyfy heapq._heapify_max()
-        while [heapq.heappop(h) for i in range(len(h))]
-
-
 class ListNode:
     def __init__(self, value):
         self.value = value

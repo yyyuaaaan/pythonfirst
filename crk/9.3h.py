@@ -18,7 +18,10 @@ and (array[mid]). Then check left and right part seperately.
 def mindex2(array, l, r):
     """
     use indes l r is better
-
+    :param array:
+    :param l:
+    :param r:
+    :return:
     """
     if len(array)==0:
         return
@@ -28,35 +31,6 @@ def mindex2(array, l, r):
     mid = (l+r)/2
     if array[mid] == mid:
         return mid
-    elif array[mid]>mid:
-        return mindex2(array, l, mid)
-    else:
-        return mindex2(array, mid+1, r)
-
-
-def mindexDups(array):
-    """
-    use indes l r is better
-
-    recurse on both sides, but this time skip one ele
-    Left side:  0 to min(midIndex-1,midvalue)
-    right side: max(midIndex+1, midvalue) to end
-
-    still linear time, O(n), coz like bst traversal.
-    """
-    if len(array)==0:
-        return -1
-    end = len(array)-1
-
-    mid = (0+end)/2
-    if array[mid] == mid:
-        return mid
-    else:
-        ileft=min(mid-1, array[mid)])
-        mindexDups(array[0:ileft])
-
-        iright=max(mid+1,array[mid])
-        mindexDups(array[0:ileft])
     elif array[mid]>mid:
         return mindex2(array, l, mid)
     else:
