@@ -1,4 +1,3 @@
-import Queue
 
 """
 __author__ = 'anyu'
@@ -7,29 +6,14 @@ Write a program to sort a stack in ascending order. You should not make any assu
 about how the stack is implemented. The following are the only functions that should be
 used to write this program: push | pop | peek | isEmpty.
 
-1,insertion sort, use the helping stack
-
-2,unlimited stack, use recursion   i.e.If we were allowed to use unlimited stacks,
- we could implement a modified quicksort or mergesort.
-With the mergesort solution, we would create two extra stacks and divide the stack
-into two parts. We would recursively sort each stack, and then merge them back together
-in sorted order into the original stack. Note that this would require the creation of
-two additional stacks per level of recursion.
-
+1,insertion sort, use one helping stack, keep the reversed result in temp stack, then insert one by one
+2, selection sort, need two extra stack, one keep orderd result, one to maintain min.
 3,priority queue, until all
-void Qsort(stack<int> &s){
-    priority_queue< int,vector<int>,greater<int> > q;
-    while(!s.empty()){
-        q.push(s.top());
-        s.pop();
-    }
-    while(!q.empty()){
-        s.push(q.top());
-        q.pop();
 4 use list as linked list, to do selection sort, or make a  linked list by myself
 
 """
 
+import Queue
 
 def psort(s):
     if not s:
@@ -49,3 +33,28 @@ def psort(s):
 
 
 
+def stacksort(s):
+    """
+     15
+    2 4
+    5 2
+    7 1
+    insertion sort
+    1,insertion sort, use one helping stack, keep the reversed result in temp stack, then insert one by one
+
+    """
+    temp=[]
+    if not s:
+        return
+    else:
+        temp.append(s.pop())
+        #insertion
+        while s:
+            if s.peek()>= temp.peek():
+                temp.append(s.pop())
+            else:
+                item = s.pop()
+                while item<temp.peek():
+                    s.push(temp.pop())
+                temp.append(item)
+        return

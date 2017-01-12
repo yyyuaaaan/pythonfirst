@@ -10,63 +10,57 @@ but this significantly increases the complexity of the problem
  Fixed Division
 int stackSize = 100;
 
+hash the item and devide by 3, remainder decide which stack to put in
+
 
 """
+class Stack(list):
+    def __init__(self, size=10):
+        self.size=size
+        self.stack=[]
+
+    def empty(self):
+        return self.stack.__len__()==0
+    def full(self):
+        return self.size==self.stack.__len__()
+
+    def push(self,data):
+        if self.full():
+            print("stack full")
+        else:
+            self.stack.append(data)
+    def pop(self):
+        if self.empty():
+            print("stack empty")
+        else:
+            data = self.stack.pop()
+            return data
+
 class ArrayForThreeStacks(object):
     """
     # wrong, -1 is actually empty
     """
-    def __init__(self,llist):
-        self.array=[None]*100
-        self.number=0 # front, middle, end stack correspont 0, 1, 2
-        self.frontstack=self.array[0]
-        self.frontstacksize=30
-        self.frontstackpointer=0
+    def __init__(self,sizeofarray=120,nofstacks=3):
+        self.array=[None]*sizeofarray
+        self.nofstacks=nofstacks
+        self.indexofstacks=[]
+        for i in range(self.nofstacks):
+            self.indexofstacks.append(0)
 
-        self.endstack=self.array[99]
-        self.endstacksize=30
-        self.endstackpointer=30 # array[30]-[69]
-
-        self.middlestack=self.array[30]
-        self.middlestacksize=40
-        self.middlestackpointer=70
-
-    def empty(self,stacknumber):
-        if stacknumber ==0:
-            return self.frontstackpointer==0
-        elif stacknumber ==1:
-            return self.endstackpointer == 30
-        elif stacknumber ==2:
-            return self.middlestackpointer==70
-        else:
-            print("wrong parameter")
-            return
+    def empty(self,stacknumber): #0 1 2
+        return self.indexofstacks[stacknumber]==0
 
     def full(self,stacknumber):
-        if stacknumber ==0:
-            return self.frontstackpointer==29
-        elif stacknumber ==1:
-            return self.endstackpointer == 69
-        elif stacknumber ==2:
-            return self.middlestackpointer==99
-        else:
-            print("wrong parameter")
-            return
+        return self.indexofstacks[stacknumber] == len(self.array)/self.nofstacks
 
     def push(self,stacknumber,data):
         if self.full(stacknumber):
             print("stack full")
             return
         else:
-            if stacknumber ==0:
-                self.array[self.frontstackpointer]=data
-                self.frontstackpointer+=1
-            elif stacknumber ==1:
-                self.array[self.middlestackpointer]=data
-                self.frontstackpointer+=1
-            elif stacknumber ==2:
-                self.array[self.endstackpointer]=data
-                self.frontstackpointer+=1
+            sizeofonestack = len(self.array)/self.nofstacks
+            self.array[stacknumber*sizeofonestack + self.indexofstacks[stacknumber]] = data
+            self.indexofstacks[stacknumber]+=1
             return
 
     def pop(self,stacknumber):
@@ -74,17 +68,9 @@ class ArrayForThreeStacks(object):
             print("stack empty")
             return
         else:
-            if stacknumber ==0:
-                data= self.array[self.frontstackpointer]
-                self.frontstackpointer-=1
-            elif stacknumber ==1:
-                data=self.array[self.middlestackpointer]
-                self.frontstackpointer-=1
-            elif stacknumber ==2:
-                data=self.array[self.endstackpointer]
-                self.frontstackpointer-=1
-            return data
+            sizeofonestack = len(self.array)/self.nofstacks
 
+            i = sizeofonestack*stacknumber + self.indexofstacks[stacknumber]
+            self.indexofstacks[stacknumber] -=1
 
-
-
+            return self.array[i]
