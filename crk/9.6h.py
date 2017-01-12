@@ -17,6 +17,7 @@ insert a left paren.
 
 Because we insert left and right parentheses at each index in the string,
 and we never repeat an index, each string is guaranteed to be unique.
+
 """
 
 def paren(npairs,left=0,right=0,stringout=[]):
@@ -32,3 +33,4 @@ def paren(npairs,left=0,right=0,stringout=[]):
             paren(npairs,left,right+1,stringout+[")"])
 
 paren(3)
+
