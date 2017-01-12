@@ -1,5 +1,5 @@
 """__author__ = 'anyu'
-Group Anagrams: Write a method to sort an array of strings so that all the anagrams are next to each other.
+11.2 Write a method to sort an array of strings so that all the anagrams are next to each other.
 
   alist.sort()            ## correct
   alist = blist.sort()    ## NO incorrect, sort() returns None

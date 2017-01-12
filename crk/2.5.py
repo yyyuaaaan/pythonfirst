@@ -3,12 +3,14 @@
 __author__ = 'anyu'
 
 You have two numbers represented by a linked list, where each node contains a
-single digit.The digits are stored in reverse order,such that the 1's digit is at the head
+singledigit.The digits are stored in reverse order,such that the 1's digit is at the head
 of the list. Write a function that adds the two numbers and returns the sum as a
 linked list.
-EXAMPLE
-Input: (7-> 1 -> 6) + (5 -> 9 -> 2).That is,617 + 295.
-Output:2 -> 1 -> 9.Thatis,912.
+Input:
+  First List: 7->5->9->4->6  // represents number 64957
+  Second List: 8->4 //  represents number 48
+Output
+  Resultant list: 5->0->0->5->6  // represents number 65005
 
 FOLLOW UP
 Suppose the digits are stored in forward order. Repeat the above problem.
@@ -21,42 +23,97 @@ stack result list; need to creat an extra stack, then build a linked list of res
 or insert result in front of the list
 """
 
+def addlistforwardorder(l1,l2):
+    # using stacks, pretend not list, but linkedlist
+
+    l1tempstack=[]
+    l2tempstack=[]
+    if len(l1)>len(l2): l2tempstack+=[0]*(len(l1)-len(l2))
+    if len(l2)>len(l1): l1tempstack+=[0]*(len(l2)-len(l1))
+
+    for x in l1: l1tempstack.append(x)
+    for x in l2: l2tempstack.append(x)
+
+    ltemp = []
+    while l1tempstack != []:
+        ltemp.append(l1tempstack.pop()+l2tempstack.pop())
+
+    for p1 in range(len(ltemp)):
+        if ltemp[p1]>9:
+            ltemp[p1] -= 10
+            ltemp[p1+1] +=1   # do  maintain carry implicitly
+
+    return ltemp
+
+
+
+print addlistforwardorder([1,2,3,4],[1,2,9])
+print addlistforwardorder([4,3,2,1],[9,2,1])
+
 class Node(object):
     def __init__(self,data=None):
         self.data=data
         self.next=None
 
-def sumlistreverse(l1,l2):
-    p1=l1
-    p2=l2
-    carry = 0
+import Queue
 
-    res=Node(None)
 
-    while p1 and p2:
-        d= p1.data+p2.data
-        num= (d+carry)%10
-        carry=(d+carry)/10
+def addnumberlistreverse(l1,l2):
+    """
+    must use queue to make it clear, if not, will have cumbersome details to deal with
+    :param l1: input list
+    :param l2:
+    :return: list of result
+    """
+    q1=Queue.Queue()
+    q2=Queue.Queue()
+    if not l1 and not l2:
+        print("null input")
+        return
+    else:
+        p = l1
+        while p:
+            q1.put(p.data)
+            p=p.nextnode
 
-        res.nextnode=Node(num)
-        p1=p1.nextnode
-        p2=p2.nextnode
+        p=l2
+        while p:
+            q2.put(p.data)
+            p=p.nextnode
 
-    while p1:
-        d= p1.data
-        num= (d+carry)%10
-        carry=(d+carry)/10
-        res.nextnode=Node(num)
-        p1=p1.nextnode
+    result = Node()
+    p=Node() # first node dummy node, need to delete before return the result
+    carry=0
+    while not q1.empty() and not q2.empty():
+        digit1=q1.get()
+        digit2=q2.get()
+        tempdigit= (digit1+digit2+carry)%10
+        carry=(digit1+digit2+carry)/10
+        tempnode=Node(tempdigit)
+        p.nextnode= tempnode
+        p=p.nextnode
 
-    while p2:
-        d= p2.data
-        num= (d+carry)%10
-        carry=(d+carry)/10
-        res.nextnode=Node(num)
-        p2=p2.nextnode
+    while not q1.empty():
+        digit=q1.get()
+        tempdigit = (digit+carry)%10
+        carry = (digit+carry)/10
+        tempnode=Node(tempdigit)
+        p.nextnode=tempnode
+        p=p.nextnode
 
-    return res.nextnode
+
+    while not q2.empty():
+        digit=q2.get()
+        tempdigit = (digit+carry)%10
+        carry = (digit+carry)/10
+        tempnode=Node(tempdigit)
+        p.nextnode=tempnode
+        p=p.nextnode
+
+    #del dummy node of result
+    result=result.nextnode
+
+    return result
 
 
 

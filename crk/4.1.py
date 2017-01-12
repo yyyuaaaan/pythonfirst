@@ -17,37 +17,32 @@ class Node(object):
         return "data:"+str(self.data)+"("+str(self.left)+"|"+str(self.right)+")"+"depth:"+str(self.depth)
 
 #O(n^2) naive algorithm
-
-def heightoftree(t):
-    if not t:
+def height(tree):
+    if tree.left==None and tree.right==None:
         return 0
-    else:
-        return max(heightoftree(t.left)+1, heightoftree(t.right)+1)
-def checkavl(t):
-    if not t:
-        return True
-    elif abs(heightoftree(t.left)-heightoftree(t.right))<=1:
-        return checkavl(t.left) and checkavl(t.right)
-    else:
-        return False
+    return max(height(tree.left),height(tree.right))+1
 
+def isbalanced(tree):
+    if tree.left==None and tree.right==None:
+        return True
+    else:
+        return abs(height(tree.left)- height(tree.right)) <=1 and\
+            isbalanced(tree.left) and isbalanced(tree.right)    # this must be checked
 #On each node, we recurse through its entire subtree.
 # This means that getHeight is called repeatedly on the same nodes.
 # The algorithm is therefore O(N2).
 #effcient algorithm, get heights of subtrees and check subtrees if balanced at the same time O(V+E)= O()
 
-def heightandavl(t):
-    """
-    o(n) time and O(logn) space, space is the height
-    """
-    if not t:
-        return 0
+# similar to DFS, post-order traversal
+
+def isbalanced3(tree, height=0):
+    if not tree or not tree.left and not tree.right:
+        return [True,height]
     else:
-        h1= heightandavl(t.left)
-        h2= heightandavl(t.right)
+        [isleftbalanced, leftheight] = isbalanced(tree.left,height+1)
+        [isrightbalanced, rightheight] = isbalanced(tree.right,height+1)
+        return isleftbalanced and isrightbalanced and \
+               abs(leftheight-rightheight)<=1
 
-        if  abs(h1 - h2)>1 or h1<0 or h2<0: #must include h1<0 and h2<0
-            return -1 # one num to denote False
 
-        # wrong! return abs(h1-h2)<=1
-        return max(h1, h2)+1 #if height>=0 then True
+isbalanced3(tree,0)

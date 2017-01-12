@@ -53,20 +53,17 @@ class Stackmin(object):
         return self.sp==-1
     def full(self):
         return self.sp==self.size-1
-
     def push(self,data):
         if self.full():
-            return
+            print("stack full")
         else:
-            self.stack[self.sp+1] = data
-            if self.empty() or self.minlist[self.sp]>=data:
-                self.minlist[self.sp+1] =data
-            else:
-                self.minlist[self.sp+1] = self.minlist[self.sp]
-
+            if not self.minlist:
+                if data>=self.minlist[self.sp]:
+                    self.minlist[self.sp+1]=self.minlist[self.sp]
+                else:
+                    self.minlist[self.sp+1]=data
             self.sp+=1
-            return
-
+            self.stack[self.sp] = data
     def pop(self):
         if self.empty():
             print("stack empty")

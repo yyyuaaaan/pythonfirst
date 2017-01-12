@@ -12,18 +12,43 @@ A disk can only be placed on top of a larger disk.
 Write a program to move the disks from the first rod to the last using Stacks
 
 ask again, are there any other requrirement? no? then recursion and implicit stack:)
-stack explicitly is too hard and also the code will be cryptic
+"""
+def hanoi(n,src,med,destination):
+    """
+    n disks on A, move them to C
+    using recursion,using stack implicitly
+    """
+    if n == 1:
+        print "mov {} from {} to {}".format(n, src, destination)
+        return
+    else:
+        hanoi(n-1,src,destination,med)
+        print "mov {} from {} to {}".format(n, src, destination)
+        hanoi(n-1,med,src,destination)
+    return
 
 """
-def hanoi(n,src,med,des):
-    if n ==1:
-        print "move one disk from {} to {}".format(src,des)
-    else:
-        hanoi(n-1,src,des,med)
-        print "move one disk from {} to {}".format(src,des)
-        hanoi(n-1,med,src,des)
+stack explicitly is too hard and also the code will be cryptic
+void hanoi(int n, char src, char bri, char dst){
+    stack<op> st;
+    op tmp;
+    st.push(op(1, n, src, bri, dst));
+    while(!st.empty()){
+        tmp = st.top();
+        st.pop();
+        if(tmp.begin != tmp.end){
+            st.push(op(tmp.begin, tmp.end-1, tmp.bri, tmp.src, tmp.dst));
+            st.push(op(tmp.end, tmp.end, tmp.src, tmp.bri, tmp.dst));
+            st.push(op(tmp.begin, tmp.end-1, tmp.src, tmp.dst, tmp.bri));
+        }
+        else{
+            cout<<"Move disk "<<tmp.begin<<" from "<<tmp.src<<" to "<<tmp.dst<<endl;
+        }
 
-print hanoi(10, 'src', 'med', 'des')
+    }
+}
+"""
+
 
 
 def testhanoi():
